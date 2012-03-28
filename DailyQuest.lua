@@ -3,7 +3,7 @@
         
         Shows the number of daily quests in a moveable line in your interface
         
-        Version: v_1.0.0
+        Version: v_1.0.1
         Author: romoto3 (cech12@gmail.com)
 ]]--
 
@@ -25,7 +25,7 @@ function DailyQuest_OnLoad(this)
   SlashCmdList["DQREFRESH"] = DailyQuestRefresh;
   
   DailyQuestRefresh();
-  DEFAULT_CHAT_FRAME:AddMessage("DailyQuest v_1.0.0 loaded");
+  DEFAULT_CHAT_FRAME:AddMessage("DailyQuest v_1.0.1 loaded");
 end
 
 function dq_slash()
