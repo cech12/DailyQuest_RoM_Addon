@@ -1,0 +1,53 @@
+<Ui xmlns="http://www.runewaker.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.runewaker.com/..\..\WorldXML\UI.xsd">
+  <Script file="DailyQuest.lua"/>
+  
+  <Frame name="DailyQuestAnchorFrame" parent="UIParent" hidden="false" frameStrata="LOW" enableMouse="true" inherits="UIPanelAnchorFrameTemplate">
+		<Size>
+			<AbsDimension x="16" y="16"/>
+		</Size>
+		<Anchors>
+			<Anchor point="LEFT" relativePoint="LEFT" relativeTo="UIParent">
+				<Offset>
+					<AbsDimension x="0" y="0"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Layers>
+			<Layer>
+				<Texture file="Interface\WorldMap\WorldMap-TitlebarSwitch-Normal">
+				</Texture>
+			</Layer>
+		</Layers>
+	</Frame>
+  
+  <Frame name="DailyQuest" parent="UIParent">
+    <Size>
+      <AbsDimension x="200" y="26"/>
+    </Size>
+		<Scripts>
+			<OnLoad>
+				DailyQuest_OnLoad(this);
+			</OnLoad>
+      <OnEvent>
+        DailyQuest_OnEvent(event);
+      </OnEvent>
+		</Scripts>
+    <Anchors>
+      <Anchor point="TOPLEFT" relativePoint="BOTTOMRIGHT" relativeTo="DailyQuestAnchorFrame">
+        <Offset>
+          <AbsDimension x="-3" y="-4"/>
+        </Offset>
+      </Anchor>
+    </Anchors>
+    <Layers>
+      <Layer level="ARTWORK">
+        <FontString name="$parentText" inherits="GameFontHighlight">
+          <Anchors>
+            <Anchor point="TOPLEFT" relativePoint="TOPLEFT"/>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+  </Frame>
+  
+</Ui>

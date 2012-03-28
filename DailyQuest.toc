@@ -1,0 +1,6 @@
+## Title: DailyQuest
+## Author: romoto3 (cech12@gmail.com)
+## Description: Shows the number of daily quests in a moveable line in your interface
+## Version: v_1.0.0
+
+DailyQuest.xml
