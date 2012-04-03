@@ -1,7 +1,7 @@
 <Ui xmlns="http://www.runewaker.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.runewaker.com/..\..\WorldXML\UI.xsd">
   <Script file="DailyQuest.lua"/>
   
-  <Frame name="DailyQuestAnchorFrame" parent="UIParent" hidden="false" frameStrata="LOW" enableMouse="true" inherits="UIPanelAnchorFrameTemplate">
+  <Button name="DailyQuestAnchorFrame" parent="UIParent" hidden="false" frameStrata="LOW" enableMouse="true" inherits="UIPanelAnchorFrameTemplate">
 		<Size>
 			<AbsDimension x="16" y="16"/>
 		</Size>
@@ -12,13 +12,31 @@
 				</Offset>
 			</Anchor>
 		</Anchors>
-		<Layers>
-			<Layer>
-				<Texture file="Interface\WorldMap\WorldMap-TitlebarSwitch-Normal">
-				</Texture>
-			</Layer>
-		</Layers>
-	</Frame>
+    <Scripts>
+      <OnLoad>
+        this:RegisterForClicks("LeftButton", "RightButton");
+      </OnLoad>
+      <OnMouseDown>
+        DailyQuestButton_OnMouseDown(this,key);
+      </OnMouseDown>
+      <OnMouseUp>
+        DailyQuestButton_OnMouseUp();
+      </OnMouseUp>
+      <OnClick>
+        DailyQuestButton_OnClick(this,key);
+      </OnClick>
+      <OnEnter>
+        GameTooltip:SetText(CHANNEL_CHANGE_ANCHOR_FRAME, 0, 0.75, 0.95); --TODO: Position des Tooltipps nicht ueber den Rand hinaus
+        GameTooltip:SetOwner(this, "LEFT", 4, 0);
+        GameTooltip:Show();
+      </OnEnter>
+      <OnLeave>
+        GameTooltip:Hide();
+      </OnLeave>
+    </Scripts>
+		<NormalTexture file="Interface\WorldMap\WorldMap-TitlebarSwitch-Normal" />
+		<PushedTexture file="Interface\WorldMap\WorldMap-TitlebarSwitch-Depress" />
+  </Button>
   
   <Frame name="DailyQuest" parent="UIParent">
     <Size>
