@@ -36,11 +36,12 @@ end
 
 function DailyQuestButton_OnClick(this,key)
 	if (key == "LBUTTON") then
-		if (GameConfigFrame:IsVisible() == false) then
-			ShowUIPanel(GameConfigFrame); -- hier wird das normale Interface-Menü aufgerufen
-			OnClick_GCF_Tab(6);           -- TODO: neues Menü mit Einstellungsmoeglichkeiten (Farbe, Fixierung, Anzeigen)
+		if (DailyQuestSettings:IsVisible() == false) then
+			--ShowUIPanel(GameConfigFrame); -- hier wird das normale Interface-Menü aufgerufen
+			--OnClick_GCF_Tab(6);           -- TODO: neues Menü mit Einstellungsmoeglichkeiten (Farbe, Fixierung, Anzeigen)
+      ShowUIPanel(DailyQuestSettings);
 		else
-			HideUIPanel(GameConfigFrame);
+			HideUIPanel(DailyQuestSettings);
 		end
 	end
 end

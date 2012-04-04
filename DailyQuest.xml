@@ -68,4 +68,352 @@
     </Layers>
   </Frame>
   
+  <!-- SETTING-FRAME -->
+  <Frame name="DailyQuestSettings" parent="UIParent" enableMouse="true" movable="true" hidden="true" >
+		<Size>
+			<AbsDimension x="390" y="195"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER">
+				<Offset>
+					<AbsDimension x="0" y="0"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Backdrop edgeFile="Interface\Tooltips\Tooltip-Border" bgFile="Interface\Tooltips\Tooltip-Background">
+			<BackgroundInsets>
+				<AbsInset top="4" left="4" bottom="4" right="4"/>
+			</BackgroundInsets>
+			<EdgeSize>
+				<AbsValue val="16"/>
+			</EdgeSize>
+			<TileSize>
+				<AbsValue val="16"/>
+			</TileSize>
+		</Backdrop>
+    <!-- Setting Box -->
+		<Frames>
+			<Frame name="$parent_Box">
+				<Size>
+					<AbsDimension x="370" y="131"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="7" y="24"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Backdrop edgeFile="Interface\Tooltips\Tooltip-Border" bgFile="Interface\Tooltips\Tooltip-Background">
+					<BackgroundInsets>
+						<AbsInset top="4" left="4" bottom="4" right="4"/>
+					</BackgroundInsets>
+					<EdgeSize>
+						<AbsValue val="16"/>
+					</EdgeSize>
+					<TileSize>
+						<AbsValue val="16"/>
+					</TileSize>
+				</Backdrop>
+			</Frame>
+		</Frames>
+    <!-- Titles -->
+    <Frames>
+			<Frame name="$parentFont">
+				<Layers>
+					<Layer>
+						<FontString name="DailyQuestTrackTitle1" inherits="Font_FrameTitle" text="DailyQuest QUEST_TRACK_TOOLTIP_SETTING"> <!--FOCUSFRAME_OPTION, QUEST_TRACK_TOOLTIP_SETTING, UI_WORLDMAP_SETUP-->
+							<Anchors>
+								<Anchor point="TOPLEFT">
+									<Offset>
+										<AbsDimension x="13" y="10"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+			</Frame>
+    </Frames>
+    <!-- Settings -->
+    <Frames>
+      <!-- Show -->
+      <CheckButton name="DailyQuestSetting_Show" inherits="UIPanelCheckButtonTemplate" hidden="false">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<RelDimension x="15" y="29"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						--QuestTrackSetting_5_OnClick(this);
+					</OnClick>
+					<OnEnter>
+						GameTooltip:SetText(SYS_QUESTTRACK_SETTING_SHOWTIPS);
+						GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT", 4, 0);
+						GameTooltip:Show();
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+				</Scripts>
+				<Layers>
+					<Layer>
+						<FontString name="$parent_Font" inherits="GameFontHighlight" text="OBJ_SHOW"> <!--GCF_VISIBLE, OBJ_SHOW-->
+							<Anchors>
+								<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parent"/>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+			</CheckButton>
+      <!-- Lock -->
+      <CheckButton name="DailyQuestSetting_Lock" inherits="UIPanelCheckButtonTemplate" hidden="false">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="DailyQuestSetting_Show">
+						<Offset>
+							<RelDimension x="0" y="-5"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						--QuestTrackSetting_5_OnClick(this);
+					</OnClick>
+					<OnEnter>
+						GameTooltip:SetText(SYS_QUESTTRACK_SETTING_SHOWTIPS);
+						GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT", 4, 0);
+						GameTooltip:Show();
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+				</Scripts>
+				<Layers>
+					<Layer>
+						<FontString name="$parent_Font" inherits="GameFontHighlight" text="RAIDFRAME_LOCK"> <!--Fenster: RAIDFRAME_LOCK; Interface: SYS_QUESTTRACK_SETTING_LOCK-->
+							<Anchors>
+								<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parent"/>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+			</CheckButton>
+      <!-- Color -->
+			<Button name="DailyQuestSetting_Color" hidden="false">
+				<Size>
+					<AbsDimension x="20" y="20"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="DailyQuestSetting_Lock">
+						<Offset>
+							<RelDimension x="6" y="1"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						--QuestTrackSetting_1_OnClick(this);
+					</OnClick>
+				</Scripts>
+				<NormalTexture file="interface\RUNESOFMAGIC_picture\SYS_QUESTTRACK_SETTING_3Normal"/>
+				<PushedTexture file="interface\RUNESOFMAGIC_picture\SYS_QUESTTRACK_SETTING_3MouseDown"/>
+			</Button>
+			<Frame name="DailyQuestSetting_Color_FontFrame">
+				<Layers>
+					<Layer>
+						<FontString name="DailyQuestSetting_Color_Font" inherits="GameFontHighlight" text="C_MAIN_COLOR"> <!--C_MAIN_COLOR-->
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="RIGHT" relativeTo="DailyQuestSetting_Color">
+									<Offset>
+										<AbsDimension x="6" y="-5"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+          </Layer>
+        </Layers>
+      </Frame>
+      <!-- FontSize -->
+			<Slider name="DailyQuestSetting_FontSize" orientation="HORIZONTAL">
+				<Size>
+					<AbsDimension x="182" y="15"/>
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" relativePoint="BOTTOMLEFT" relativeTo="DailyQuestSetting_Color">
+						<Offset>
+							<AbsDimension x="0" y="29"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnValueChanged>
+						--SYS_QuestTrackSetting_TypefaceFont_OnValueChanged();
+					</OnValueChanged>
+				</Scripts>
+				<Layers>
+					<Layer>
+						<Texture name="$parentLeft" file="Interface\ChatFrame\ChatEditBox-Border">
+							<Size>
+								<AbsDimension x="16" y="15"/>
+							</Size>
+							<Anchors>
+								<Anchor point="LEFT"/>
+							</Anchors>
+							<TexCoords left="0" right="0.25" top="0" bottom="0.6875"/>
+						</Texture>
+						<Texture name="$parentRight" file="Interface\ChatFrame\ChatEditBox-Border">
+							<Size>
+								<AbsDimension x="16" y="15"/>
+							</Size>
+							<Anchors>
+								<Anchor point="RIGHT"/>
+							</Anchors>
+							<TexCoords left="0.75" right="1" top="0" bottom="0.6875"/>
+						</Texture>
+						<Texture name="$parentMiddle" file="Interface\ChatFrame\ChatEditBox-Border">
+							<Size>
+								<AbsDimension x="1" y="15"/>
+							</Size>
+							<Anchors>
+								<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parentLeft"/>
+								<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="$parentRight"/>
+							</Anchors>
+							<TexCoords left="0.25" right="0.75" top="0" bottom="0.6875"/>
+						</Texture>
+					</Layer>
+					<Layer level="BORDER">
+						<FontString name="SYS_QuestTrackSetting_TypefaceFont_Count" inherits="GameFontNormal" text="SYS_QUESTTRACK_SETTING_FONT">
+							<Anchors>
+								<Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="0" y="-5"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="SYS_QuestTrackSetting_TypefaceFont_Size" inherits="GameFontHighlight" text="15">
+							<Anchors>
+								<Anchor point="BOTTOMRIGHT" relativePoint="TOPRIGHT">
+									<Offset>
+										<AbsDimension x="0" y="-5"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="$parentLow" inherits="GameFontHighlight" text="8">
+							<Anchors>
+								<Anchor point="LEFT">
+									<Offset>
+										<AbsDimension x="5" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="$parentHigh" inherits="GameFontHighlight" text="20">
+							<Anchors>
+								<Anchor point="RIGHT">
+									<Offset>
+										<AbsDimension x="-5" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<ThumbTexture file="Interface\ChatFrame\ChatFrame-ScrollBar-Knob">
+					<Size>
+						<AbsDimension x="16" y="16"/>
+					</Size>
+				</ThumbTexture>
+			</Slider>
+    </Frames>
+    <!-- Buttons -->
+    <Frames>
+			<Button name="DailyQuestSettings_Default" inherits="UIPanelButtonTemplate" text="SYS_QUESTTRACK_SETTING_DEFAULT">
+				<Size>
+					<AbsDimension x="80" y="24"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="14" y="-10"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						--QuestTrack_DisplaySettings_Default_OnClick();
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="DailyQuestSettings_Apply" inherits="UIPanelButtonTemplate" text="OPTUI_COM_APPLY">
+				<!--??-->
+				<Size>
+					<AbsDimension x="60" y="24"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="-10" y="-10"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						--QuestTrack_DisplaySettings_Apply_OnClick();
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="DailyQuestSettings_Cancel" inherits="UIPanelButtonTemplate" text="CANCEL">
+				<Size>
+					<AbsDimension x="60" y="24"/>
+				</Size>
+				<Anchors>
+					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="DailyQuestSettings_Apply">
+						<Offset>
+							<AbsDimension x="-4" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						--QuestTrack_DisplaySettings_Cancel_OnClick();
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="QuestTrack_DisplaySettings_OK" inherits="UIPanelButtonTemplate" text="BSF_STR_APPLY">
+				<Size>
+					<AbsDimension x="60" y="24"/>
+				</Size>
+				<Anchors>
+					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="DailyQuestSettings_Cancel">
+						<Offset>
+							<AbsDimension x="-4" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						--QuestTrack_DisplaySettings_OK_OnClick();
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				--SYS_QuestTrackSettings_InitializeSliders(this);
+				--SYS_QuestTrackSetting_OnLoad(this);
+			</OnLoad>
+			<OnShow>
+				--SYS_QuestTrackSetting_OnShow(this);
+			</OnShow>
+			<OnEscapePressed>
+				this:Hide();
+			</OnEscapePressed>
+			
+		</Scripts>
+	</Frame>
 </Ui>
