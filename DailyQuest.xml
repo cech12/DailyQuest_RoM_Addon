@@ -59,7 +59,7 @@
     </Anchors>
     <Layers>
       <Layer level="ARTWORK">
-        <FontString name="$parentText" inherits="GameFontHighlight">
+        <FontString name="$parentText" inherits="GameFontHighlight"> <!--GameFontHighlight, Font_FrameTitle, NumberFontNormal, QuestTrackerItemString-->
           <Anchors>
             <Anchor point="TOPLEFT" relativePoint="TOPLEFT"/>
           </Anchors>
@@ -71,7 +71,7 @@
   <!-- SETTING-FRAME -->
   <Frame name="DailyQuestSettings" parent="UIParent" enableMouse="true" movable="true" hidden="true" >
 		<Size>
-			<AbsDimension x="390" y="195"/>
+			<AbsDimension x="390" y="205"/>
 		</Size>
 		<Anchors>
 			<Anchor point="CENTER">
@@ -122,7 +122,7 @@
 			<Frame name="$parentFont">
 				<Layers>
 					<Layer>
-						<FontString name="DailyQuestTrackTitle1" inherits="Font_FrameTitle" text="DailyQuest QUEST_TRACK_TOOLTIP_SETTING"> <!--FOCUSFRAME_OPTION, QUEST_TRACK_TOOLTIP_SETTING, UI_WORLDMAP_SETUP-->
+						<FontString name="DailyQuestSettingsHeadline" inherits="Font_FrameTitle" text="DailyQuest QUEST_TRACK_TOOLTIP_SETTING"> <!--FOCUSFRAME_OPTION, QUEST_TRACK_TOOLTIP_SETTING, UI_WORLDMAP_SETUP-->
 							<Anchors>
 								<Anchor point="TOPLEFT">
 									<Offset>
@@ -148,16 +148,16 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						--QuestTrackSetting_5_OnClick(this);
+						DailyQuestSetting_Show_OnClick(this);
 					</OnClick>
-					<OnEnter>
+					<!--OnEnter>
 						GameTooltip:SetText(SYS_QUESTTRACK_SETTING_SHOWTIPS);
 						GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT", 4, 0);
 						GameTooltip:Show();
 					</OnEnter>
 					<OnLeave>
 						GameTooltip:Hide();
-					</OnLeave>
+					</OnLeave-->
 				</Scripts>
 				<Layers>
 					<Layer>
@@ -180,16 +180,16 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						--QuestTrackSetting_5_OnClick(this);
+						DailyQuestSetting_Lock_OnClick(this);
 					</OnClick>
-					<OnEnter>
+					<!--OnEnter>
 						GameTooltip:SetText(SYS_QUESTTRACK_SETTING_SHOWTIPS);
 						GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT", 4, 0);
 						GameTooltip:Show();
 					</OnEnter>
 					<OnLeave>
 						GameTooltip:Hide();
-					</OnLeave>
+					</OnLeave-->
 				</Scripts>
 				<Layers>
 					<Layer>
@@ -215,7 +215,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						--QuestTrackSetting_1_OnClick(this);
+						DailyQuestSetting_Color_OnClick(this);
 					</OnClick>
 				</Scripts>
 				<NormalTexture file="interface\RUNESOFMAGIC_picture\SYS_QUESTTRACK_SETTING_3Normal"/>
@@ -250,7 +250,7 @@
 				</Anchors>
 				<Scripts>
 					<OnValueChanged>
-						--SYS_QuestTrackSetting_TypefaceFont_OnValueChanged();
+						DailyQuestSetting_FontSize_OnValueChanged();
 					</OnValueChanged>
 				</Scripts>
 				<Layers>
@@ -285,7 +285,7 @@
 						</Texture>
 					</Layer>
 					<Layer level="BORDER">
-						<FontString name="SYS_QuestTrackSetting_TypefaceFont_Count" inherits="GameFontNormal" text="SYS_QUESTTRACK_SETTING_FONT">
+						<FontString name="$parent_Count" inherits="GameFontNormal" text="SYS_QUESTTRACK_SETTING_FONT">
 							<Anchors>
 								<Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT">
 									<Offset>
@@ -294,7 +294,7 @@
 								</Anchor>
 							</Anchors>
 						</FontString>
-						<FontString name="SYS_QuestTrackSetting_TypefaceFont_Size" inherits="GameFontHighlight" text="15">
+						<FontString name="$parent_Size" inherits="GameFontHighlight" text="15">
 							<Anchors>
 								<Anchor point="BOTTOMRIGHT" relativePoint="TOPRIGHT">
 									<Offset>
@@ -345,12 +345,11 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						--QuestTrack_DisplaySettings_Default_OnClick();
+						DailyQuestSettings_Default_OnClick();
 					</OnClick>
 				</Scripts>
 			</Button>
 			<Button name="DailyQuestSettings_Apply" inherits="UIPanelButtonTemplate" text="OPTUI_COM_APPLY">
-				<!--??-->
 				<Size>
 					<AbsDimension x="60" y="24"/>
 				</Size>
@@ -363,7 +362,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						--QuestTrack_DisplaySettings_Apply_OnClick();
+						DailyQuestSettings_Apply_OnClick();
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -380,11 +379,11 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						--QuestTrack_DisplaySettings_Cancel_OnClick();
+						DailyQuestSettings_Cancel_OnClick();
 					</OnClick>
 				</Scripts>
 			</Button>
-			<Button name="QuestTrack_DisplaySettings_OK" inherits="UIPanelButtonTemplate" text="BSF_STR_APPLY">
+			<Button name="DailyQuestSettings_OK" inherits="UIPanelButtonTemplate" text="BSF_STR_APPLY">
 				<Size>
 					<AbsDimension x="60" y="24"/>
 				</Size>
@@ -397,23 +396,21 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						--QuestTrack_DisplaySettings_OK_OnClick();
+						DailyQuestSettings_OK_OnClick();
 					</OnClick>
 				</Scripts>
 			</Button>
 		</Frames>
 		<Scripts>
 			<OnLoad>
-				--SYS_QuestTrackSettings_InitializeSliders(this);
-				--SYS_QuestTrackSetting_OnLoad(this);
+				DailyQuestSettings_OnLoad(this);
 			</OnLoad>
 			<OnShow>
-				--SYS_QuestTrackSetting_OnShow(this);
+				DailyQuestSettings_OnShow(this);
 			</OnShow>
 			<OnEscapePressed>
 				this:Hide();
 			</OnEscapePressed>
-			
 		</Scripts>
 	</Frame>
 </Ui>
