@@ -3,14 +3,14 @@
         
         Shows the number of daily quests in a moveable line in your interface
         
-        Version: v1.2.0
+        Version: v1.2.1
         Author: romoto3 (cech12@gmail.com)
 ]]--
 
 --------------------------------------------------------------------------------------
 -- Init
 
-local VERSION = "v1.2.0";
+local VERSION = "v1.2.1";
 g_DailyQuest = nil;
 
 function g_DailyQuestConfig_Init()
@@ -120,9 +120,9 @@ function DailyQuest_OnLoad(this)
   SlashCmdList["DQREFRESH"] = DailyQuestRefresh;
   SlashCmdList["DQSETTINGS"] = DailyQuestSettings_OpenClose;
   
-  DEFAULT_CHAT_FRAME:AddMessage("DailyQuest " .. VERSION .. " loaded"); -- wird nach DailyQuestRefresh nicht angezeigt
   DailyQuestRefresh();
   DailyQuestShowHide();
+  DEFAULT_CHAT_FRAME:AddMessage("DailyQuest " .. VERSION .. " loaded");
 end
 
 function dq_slash()
@@ -144,18 +144,20 @@ function DailyQuestRefresh()
 end
 
 function DailyQuestShowHide()
-  if (g_DailyQuestConfig.Enable) then
-    if (g_DailyQuestConfig.Show) then
-      ShowUIPanel(DailyQuestAnchorFrame);
-      ShowUIPanel(DailyQuest);
+  if (g_DailyQuestConfig) then
+    if (g_DailyQuestConfig.Enable) then
+      if (g_DailyQuestConfig.Show) then
+        ShowUIPanel(DailyQuestAnchorFrame);
+        ShowUIPanel(DailyQuest);
+      else
+        HideUIPanel(DailyQuestAnchorFrame);
+        HideUIPanel(DailyQuest);
+        DEFAULT_CHAT_FRAME:AddMessage("DailyQuest: /dqs to open DailyQuest Settings"); 
+      end
     else
       HideUIPanel(DailyQuestAnchorFrame);
       HideUIPanel(DailyQuest);
-      DEFAULT_CHAT_FRAME:AddMessage("DailyQuest: /dqs to open DailyQuest Settings"); 
     end
-  else
-    HideUIPanel(DailyQuestAnchorFrame);
-    HideUIPanel(DailyQuest);
   end
 end
 
