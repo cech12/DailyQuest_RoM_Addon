@@ -3,20 +3,19 @@
         
         Shows the number of daily quests in a moveable line in your interface
         
-        Version: v1.2.1
+        Version: v1.2.2
         Author: romoto3 (cech12@gmail.com)
 ]]--
 
 --------------------------------------------------------------------------------------
 -- Init
 
-local VERSION = "v1.2.1";
-g_DailyQuest = nil;
+local VERSION = "v1.2.2";
 
 function g_DailyQuestConfig_Init()
 	if (not g_DailyQuestConfig) then g_DailyQuestConfig = {}; end
-	if (g_DailyQuestConfig.Enable == nil) then g_DailyQuestConfig.Enable = true;	end
-	if (g_DailyQuestConfig.Show == nil) then g_DailyQuestConfig.Show = true;	end
+	if (g_DailyQuestConfig.Enable == nil) then g_DailyQuestConfig.Enable = true; end
+	if (g_DailyQuestConfig.Show == nil) then g_DailyQuestConfig.Show = true; end
 	if (g_DailyQuestConfig.Lock == nil) then	g_DailyQuestConfig.Lock = false; end
 	if (g_DailyQuestConfig.FontSize == nil) then g_DailyQuestConfig.FontSize = 12; end
 	if (g_DailyQuestConfig.r == nil) then g_DailyQuestConfig.r = 1; end
@@ -31,8 +30,8 @@ end;
 function DailyQuest_RegisterWithAddonManager()
   if AddonManager then
     local addon = {
-      name = "DailyQuest", 
-      description = "DailyQuest shows the number of daily quests in a moveable line in your interface.", 
+      name = "DailyQuest",
+      description = "DailyQuest shows the number of daily quests in a moveable line in your interface.",
       category = "Information",
       version = VERSION,
       author = "romoto3",
@@ -46,15 +45,23 @@ function DailyQuest_RegisterWithAddonManager()
     if AddonManager.RegisterAddonTable then
       AddonManager.RegisterAddonTable(addon)
     else
-      AddonManager.RegisterAddon(addon.name, addon.description, addon.icon, addon.category, 
+      AddonManager.RegisterAddon(addon.name, addon.description, addon.icon, addon.category,
         addon.configFrame, addon.slashCommands, addon.miniButton, addon.onClickScript)
+    end
+    
+    if (not g_DailyQuestConfig.Enable) then -- Wenn DailyQuest auf 'Disabled' steht
+      for k, v in ipairs(AddonManager.Addons) do
+        if (AddonManager.Addons[k].name == addon.name) then
+          AddonManager.Addons[k].enabled = g_DailyQuestConfig.Enable
+        end
+      end
     end
   else
     g_DailyQuestConfig.Enable = true;
   end
 end
 
-function DailyQuest_Enable() 
+function DailyQuest_Enable()
   g_DailyQuestConfig.Enable = true;
   DailyQuestRefresh();
   DailyQuestShowHide();
@@ -110,7 +117,6 @@ function DailyQuest_OnLoad(this)
   
 	this:RegisterEvent("VARIABLES_LOADED");
 	this:RegisterEvent("RESET_QUESTTRACK");
-	--this:RegisterEvent("QUEST_COMPLETE");
   
   SLASH_DQ1 = "/dq";
   SLASH_DQREFRESH1 = "/dqr";
@@ -120,8 +126,6 @@ function DailyQuest_OnLoad(this)
   SlashCmdList["DQREFRESH"] = DailyQuestRefresh;
   SlashCmdList["DQSETTINGS"] = DailyQuestSettings_OpenClose;
   
-  DailyQuestRefresh();
-  DailyQuestShowHide();
   DEFAULT_CHAT_FRAME:AddMessage("DailyQuest " .. VERSION .. " loaded");
 end
 
@@ -132,53 +136,51 @@ function dq_slash()
 end
 
 function DailyQuestRefresh()
-  if (g_DailyQuestConfig) then
-    if (g_DailyQuestConfig.Enable) then
-      DailyQuestText:SetText(""); --SetFontSize reagiert nur bei einer Textaenderung
-      DailyQuestText:SetFontSize(g_DailyQuestConfig.FontSize);
-      DailyQuestText:SetColor(g_DailyQuestConfig.r, g_DailyQuestConfig.g, g_DailyQuestConfig.b);
-      DailyQuestText:SetAlpha(g_DailyQuestConfig.a);
-      DailyQuestText:SetText(getDailyQuestText());
-    end
+  if (g_DailyQuestConfig.Enable) then
+    DailyQuestText:SetText(""); --SetFontSize reagiert nur bei einer Textaenderung
+    DailyQuestText:SetFontSize(g_DailyQuestConfig.FontSize);
+    DailyQuestText:SetColor(g_DailyQuestConfig.r, g_DailyQuestConfig.g, g_DailyQuestConfig.b);
+    DailyQuestText:SetAlpha(g_DailyQuestConfig.a);
+    DailyQuestText:SetText(getDailyQuestText());
   end
 end
 
 function DailyQuestShowHide()
-  if (g_DailyQuestConfig) then
-    if (g_DailyQuestConfig.Enable) then
-      if (g_DailyQuestConfig.Show) then
-        ShowUIPanel(DailyQuestAnchorFrame);
-        ShowUIPanel(DailyQuest);
-      else
-        HideUIPanel(DailyQuestAnchorFrame);
-        HideUIPanel(DailyQuest);
-        DEFAULT_CHAT_FRAME:AddMessage("DailyQuest: /dqs to open DailyQuest Settings"); 
-      end
+  if (g_DailyQuestConfig.Enable) then
+    if (g_DailyQuestConfig.Show) then
+      ShowUIPanel(DailyQuestAnchorFrame);
+      ShowUIPanel(DailyQuest);
     else
       HideUIPanel(DailyQuestAnchorFrame);
       HideUIPanel(DailyQuest);
+      DEFAULT_CHAT_FRAME:AddMessage("DailyQuest: /dqs to open DailyQuest Settings");
     end
+  else
+    HideUIPanel(DailyQuestAnchorFrame);
+    HideUIPanel(DailyQuest);
   end
 end
 
+DQVariablesLoaded = false;
 -- waehrend "QUEST_COMPLETE" ist Daily_count() noch nicht aktualisiert. Dies erfolgt erst nach dem zweiten mal "RESET_QUESTTRACK"
 function DailyQuest_OnEvent(event)
-  --DEFAULT_CHAT_FRAME:AddMessage("jetzt " .. event);
-	if (event == "VARIABLES_LOADED") then
-		g_DailyQuestConfig_Init();
-    DailyQuest_RegisterWithAddonManager(); --for the AddonManager
-	else
-  --if (event == "RESET_QUESTTRACK" and LAST_DAILY_QUEST_EVENT == "QUEST_COMPLETE") then -- ist zu frueh, variablen werden spaeter geaendert
+  if (DQVariablesLoaded and event == "RESET_QUESTTRACK") then --erst wenn das Event VARIABLES_LOADED stattfand, soll DailyQuestRefresh ausgeführt werden
     DailyQuestRefresh();
+  elseif (event == "VARIABLES_LOADED") then
+    g_DailyQuestConfig_Init();
+    DQVariablesLoaded = true;
+    DailyQuestRefresh();
+    DailyQuestShowHide();
+    DailyQuest_RegisterWithAddonManager(); --fuer den AddonManager
   end
 end
 
 --------------------------------------------------------------------------------
---SETTINGS
+--SETTING FRAME
 
 function DailyQuestSettings_OnLoad(this)
   DailyQuestSettingsHeadline:SetText("DailyQuest " .. QUEST_TRACK_TOOLTIP_SETTING);
-
+  
 	DailyQuestSetting_FontSize:SetValueStepMode("FLOAT");
 	DailyQuestSetting_FontSize:SetMinMaxValues(8, 20);
 	DailyQuestSetting_FontSize:SetValue(1.0);
@@ -189,7 +191,7 @@ function DailyQuestSettings_OnShow(this)
 	DailyQuestSetting_Lock:SetChecked(g_DailyQuestConfig.Lock);
   
 	DailyQuestSetting_FontSize:SetValue(g_DailyQuestConfig.FontSize);
-
+  
 	g_OldOptions = {};
 	for k,v in pairs(g_DailyQuestConfig) do 
 		g_OldOptions[k] = v;
@@ -205,14 +207,13 @@ end
 
 function DailyQuestSetting_Lock_OnClick(this)
 	g_DailyQuestConfig.Lock = this:IsChecked();
-  --DailyQuestRefresh();
 end
 
 function DailyQuestChangeColor()
-	g_DailyQuestConfig.a = ColorPickerFrame.a ;
-	g_DailyQuestConfig.r = ColorPickerFrame.r ;
-	g_DailyQuestConfig.g = ColorPickerFrame.g ;
-	g_DailyQuestConfig.b = ColorPickerFrame.b ;
+	g_DailyQuestConfig.a = ColorPickerFrame.a;
+	g_DailyQuestConfig.r = ColorPickerFrame.r;
+	g_DailyQuestConfig.g = ColorPickerFrame.g;
+	g_DailyQuestConfig.b = ColorPickerFrame.b;
   DailyQuestRefresh();
 end
 
@@ -228,7 +229,7 @@ function DailyQuestSetting_Color_OnClick(this)
 	info.callbackFuncOkay = DailyQuestChangeColor;
 	info.callbackFuncUpdate = DailyQuestChangeColor;
 	info.callbackFuncCancel = DailyQuestChangeColor;
-
+  
 	OpenColorPickerFrameEx(info);
 end
 
@@ -258,7 +259,7 @@ end
 
 function DailyQuestSettings_Apply_OnClick()
 	if (g_DailyQuestConfig) then
-		for k,v in pairs(g_DailyQuestConfig) do 
+		for k,v in pairs(g_DailyQuestConfig) do
 			g_OldOptions[k] = v;
 		end
 	end
@@ -266,7 +267,7 @@ end
 
 function DailyQuestSettings_Cancel_OnClick(this)
 	if (g_OldOptions) then
-		for k,v in pairs(g_OldOptions) do 
+		for k,v in pairs(g_OldOptions) do
 			g_DailyQuestConfig[k] = v;
 		end
 	end
@@ -276,6 +277,6 @@ function DailyQuestSettings_Cancel_OnClick(this)
 end
 
 function DailyQuestSettings_OK_OnClick()
-	g_OldOptions = nil;	
+	g_OldOptions = nil;
 	HideUIPanel(DailyQuestSettings);
 end

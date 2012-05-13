@@ -26,8 +26,8 @@
         DailyQuestButton_OnClick(this,key);
       </OnClick>
       <OnEnter>
-        GameTooltip:SetText(CHANNEL_CHANGE_ANCHOR_FRAME, 0, 0.75, 0.95); --TODO: Position des Tooltipps nicht ueber den Rand hinaus
         GameTooltip:SetOwner(this, "LEFT", 4, 0);
+        GameTooltip:SetText(CHANNEL_CHANGE_ANCHOR_FRAME, 0, 0.75, 0.95);
         GameTooltip:Show();
       </OnEnter>
       <OnLeave>
