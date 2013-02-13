@@ -3,19 +3,20 @@
         
         Shows the number of daily quests in a moveable line in your interface
         
-        Version: v1.2.2
+        Version: v1.2.3
         Author: romoto3 (cech12@gmail.com)
 ]]--
 
 --------------------------------------------------------------------------------------
 -- Init
 
-local VERSION = "v1.2.2";
+local VERSION = "v1.2.3";
 
 function g_DailyQuestConfig_Init()
 	if (not g_DailyQuestConfig) then g_DailyQuestConfig = {}; end
 	if (g_DailyQuestConfig.Enable == nil) then g_DailyQuestConfig.Enable = true; end
 	if (g_DailyQuestConfig.Show == nil) then g_DailyQuestConfig.Show = true; end
+	if (g_DailyQuestConfig.ShowDailyQuestString == nil) then g_DailyQuestConfig.ShowDailyQuestString = true; end
 	if (g_DailyQuestConfig.Lock == nil) then	g_DailyQuestConfig.Lock = false; end
 	if (g_DailyQuestConfig.FontSize == nil) then g_DailyQuestConfig.FontSize = 12; end
 	if (g_DailyQuestConfig.r == nil) then g_DailyQuestConfig.r = 1; end
@@ -109,7 +110,11 @@ end
 
 function getDailyQuestText()
   local daily_quest_count, daily_quest_per_day = Daily_count();
-  return _glossary_00978 .. ": " .. daily_quest_count .. "/" .. daily_quest_per_day;
+  local dqString = "";
+  if (g_DailyQuestConfig.ShowDailyQuestString) then
+    dqString = _glossary_00978 .. ": ";
+  end
+  return dqString .. daily_quest_count .. "/" .. daily_quest_per_day;
 end
 
 function DailyQuest_OnLoad(this)
@@ -189,6 +194,7 @@ end
 function DailyQuestSettings_OnShow(this)
 	DailyQuestSetting_Show:SetChecked(g_DailyQuestConfig.Show);
 	DailyQuestSetting_Lock:SetChecked(g_DailyQuestConfig.Lock);
+	DailyQuestSetting_ShowDailyQuestString:SetChecked(g_DailyQuestConfig.ShowDailyQuestString);
   
 	DailyQuestSetting_FontSize:SetValue(g_DailyQuestConfig.FontSize);
   
@@ -207,6 +213,11 @@ end
 
 function DailyQuestSetting_Lock_OnClick(this)
 	g_DailyQuestConfig.Lock = this:IsChecked();
+end
+
+function DailyQuestSetting_ShowDailyQuestString_OnClick(this)
+  g_DailyQuestConfig.ShowDailyQuestString = this:IsChecked();
+  DailyQuestRefresh();
 end
 
 function DailyQuestChangeColor()
@@ -234,7 +245,7 @@ function DailyQuestSetting_Color_OnClick(this)
 end
 
 function DailyQuestSetting_FontSize_OnValueChanged()
-	Font_OnValueChanged  = DailyQuestSetting_FontSize:GetValue();
+	Font_OnValueChanged = DailyQuestSetting_FontSize:GetValue();
 	Font_OnValueChanged = math.floor(Font_OnValueChanged);
   
 	DailyQuestSetting_FontSize_Size:SetText("");

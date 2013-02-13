@@ -71,7 +71,7 @@
   <!-- SETTING-FRAME -->
   <Frame name="DailyQuestSettings" parent="UIParent" enableMouse="true" movable="true" hidden="true" >
 		<Size>
-			<AbsDimension x="390" y="205"/>
+			<AbsDimension x="390" y="223"/>
 		</Size>
 		<Anchors>
 			<Anchor point="CENTER">
@@ -95,7 +95,7 @@
 		<Frames>
 			<Frame name="$parent_Box">
 				<Size>
-					<AbsDimension x="370" y="131"/>
+					<AbsDimension x="370" y="160"/>
 				</Size>
 				<Anchors>
 					<Anchor point="TOPLEFT">
@@ -150,14 +150,6 @@
 					<OnClick>
 						DailyQuestSetting_Show_OnClick(this);
 					</OnClick>
-					<!--OnEnter>
-						GameTooltip:SetText(SYS_QUESTTRACK_SETTING_SHOWTIPS);
-						GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT", 4, 0);
-						GameTooltip:Show();
-					</OnEnter>
-					<OnLeave>
-						GameTooltip:Hide();
-					</OnLeave-->
 				</Scripts>
 				<Layers>
 					<Layer>
@@ -182,14 +174,6 @@
 					<OnClick>
 						DailyQuestSetting_Lock_OnClick(this);
 					</OnClick>
-					<!--OnEnter>
-						GameTooltip:SetText(SYS_QUESTTRACK_SETTING_SHOWTIPS);
-						GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT", 4, 0);
-						GameTooltip:Show();
-					</OnEnter>
-					<OnLeave>
-						GameTooltip:Hide();
-					</OnLeave-->
 				</Scripts>
 				<Layers>
 					<Layer>
@@ -201,13 +185,37 @@
 					</Layer>
 				</Layers>
 			</CheckButton>
+      <!-- ShowDailyQuestString -->
+      <CheckButton name="DailyQuestSetting_ShowDailyQuestString" inherits="UIPanelCheckButtonTemplate" hidden="false">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="DailyQuestSetting_Lock">
+            <Offset>
+              <RelDimension x="0" y="-5"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            DailyQuestSetting_ShowDailyQuestString_OnClick(this);
+          </OnClick>
+        </Scripts>
+        <Layers>
+          <Layer>
+            <FontString name="$parent_Font" inherits="GameFontHighlight" text="GCF_TITLEVISIBLE"> <!--anzeigen: GCF_VISIBLE, Titel anzeigen: GCF_TITLEVISIBLE-->
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parent"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+      </CheckButton>
       <!-- Color -->
 			<Button name="DailyQuestSetting_Color" hidden="false">
 				<Size>
 					<AbsDimension x="20" y="20"/>
 				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="DailyQuestSetting_Lock">
+					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="DailyQuestSetting_ShowDailyQuestString">
 						<Offset>
 							<RelDimension x="6" y="1"/>
 						</Offset>
